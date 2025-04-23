@@ -9,9 +9,9 @@ use which::which;
 
 use crate::cargo_add_rpath;
 
-pub const LIBAFL_QEMU_GIT_URL: &str = "https://github.com/AFLplusplus/qemu-libafl-bridge";
+pub const LIBAFL_QEMU_GIT_URL: &str = "git@git.tu-berlin.de:pspreverse/asp-qemu.git";
 pub const LIBAFL_QEMU_DIRNAME: &str = "qemu-libafl-bridge";
-pub const LIBAFL_QEMU_GIT_REV: &str = "a2180efeb068534ce2d4424b4bd97295b3d1c54a";
+pub const LIBAFL_QEMU_GIT_REV: &str = "f952a4f0aa9af4724ff82f28332c3f4be62e6ebf";
 
 pub struct BuildResult {
     pub qemu_path: PathBuf,
@@ -89,11 +89,10 @@ fn configure_qemu(
         .arg(format!("--cxx={}", linker_interceptor_plus_plus.display()))
         .arg("--as-shared-lib")
         .arg(format!("--target-list={cpu_target}-{target_suffix}"))
-        .arg("--disable-bsd-user")
-        // .arg("--disable-capstone")
         .arg("--disable-docs")
         .arg("--disable-tests")
-        .arg("--disable-tools");
+        .arg("--disable-tools")
+        .arg("--without-default-features");
 
     if cfg!(feature = "paranoid_debug") {
         cmd.arg("--enable-debug").arg("--enable-debug-tcg");
@@ -115,112 +114,18 @@ fn configure_qemu(
         })
         .arg("--enable-fdt=internal")
         .arg("--audio-drv-list=")
-        .arg("--disable-af-xdp")
-        .arg("--disable-alsa")
-        .arg("--disable-attr")
-        .arg("--disable-auth-pam")
-        .arg("--disable-dbus-display")
-        .arg("--disable-bochs")
-        .arg("--disable-bpf")
-        .arg("--disable-brlapi")
-        .arg("--disable-bzip2")
-        .arg("--disable-cap-ng")
-        .arg("--disable-canokey")
-        .arg("--disable-cloop")
-        .arg("--disable-cocoa")
-        .arg("--disable-coreaudio")
-        .arg("--disable-curl")
-        .arg("--disable-curses")
-        .arg("--disable-dmg")
-        .arg("--disable-docs")
-        .arg("--disable-dsound")
-        .arg("--disable-fuse")
-        .arg("--disable-fuse-lseek")
-        .arg("--disable-gcrypt")
-        .arg("--disable-gettext")
-        .arg("--disable-gio")
-        .arg("--disable-glusterfs")
-        .arg("--disable-gnutls")
         // .arg("--disable-gtk")
         // .arg("--disable-guest-agent")
         // .arg("--disable-guest-agent-msi")
-        .arg("--disable-hvf")
-        .arg("--disable-iconv")
-        .arg("--disable-jack")
-        .arg("--disable-keyring")
         // .arg("--disable-kvm")
-        .arg("--disable-libdaxctl")
-        .arg("--disable-libiscsi")
-        .arg("--disable-libnfs")
-        .arg("--disable-libpmem")
-        .arg("--disable-libssh")
-        .arg("--disable-libudev")
-        .arg("--disable-libusb")
-        .arg("--disable-linux-aio")
-        .arg("--disable-linux-io-uring")
-        .arg("--disable-linux-user")
         // .arg("--disable-live-block-migration")
-        .arg("--disable-lzfse")
-        .arg("--disable-lzo")
-        .arg("--disable-l2tpv3")
-        .arg("--disable-malloc-trim")
-        .arg("--disable-mpath")
-        .arg("--disable-multiprocess")
-        .arg("--disable-netmap")
-        .arg("--disable-nettle")
-        .arg("--disable-numa")
-        .arg("--disable-nvmm")
-        .arg("--disable-opengl")
-        .arg("--disable-oss")
-        .arg("--disable-pa")
-        .arg("--disable-parallels")
-        .arg("--disable-png")
         // .arg("--disable-pvrdma")
-        .arg("--disable-qcow1")
-        .arg("--disable-qed")
-        .arg("--disable-qga-vss")
-        .arg("--disable-rbd")
-        .arg("--disable-rdma")
-        .arg("--disable-replication")
-        .arg("--disable-sdl")
-        .arg("--disable-sdl-image")
-        .arg("--disable-seccomp")
-        .arg("--disable-selinux")
-        .arg("--disable-slirp-smbd")
-        .arg("--disable-smartcard")
-        .arg("--disable-snappy")
-        .arg("--disable-sndio")
-        .arg("--disable-sparse")
-        .arg("--disable-spice")
-        .arg("--disable-spice-protocol")
-        .arg("--disable-tools")
-        .arg("--disable-tpm")
-        .arg("--disable-usb-redir")
-        .arg("--disable-user")
-        .arg("--disable-u2f")
-        .arg("--disable-vde")
-        .arg("--disable-vdi")
-        .arg("--disable-vduse-blk-export")
-        .arg("--disable-vhost-crypto")
-        .arg("--disable-vhost-kernel")
-        .arg("--disable-vhost-net")
-        .arg("--disable-vhost-user-blk-server")
-        .arg("--disable-vhost-vdpa")
-        .arg("--disable-virglrenderer")
-        .arg("--disable-virtfs")
-        .arg("--disable-vmnet")
-        .arg("--disable-vnc")
-        .arg("--disable-vnc-jpeg")
-        .arg("--disable-vnc-sasl")
-        .arg("--disable-vte")
-        .arg("--disable-vvfat")
-        .arg("--disable-whpx")
-        .arg("--disable-xen")
-        .arg("--disable-xen-pci-passthrough")
-        .arg("--disable-xkbcommon")
-        .arg("--disable-zstd");
+        ;
     }
-
+    // ASPFUZZ BEGIN
+    cmd.arg("--enable-nettle");
+    cmd.arg("--enable-plugins");
+    // ASPFUZZ END
     cmd
 }
 
