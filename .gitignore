@@ -92,3 +92,8 @@ log
 
 # Coredumps
 *.core
+
+flake.lock
+flake.nix
+.envrc
+.direnv
