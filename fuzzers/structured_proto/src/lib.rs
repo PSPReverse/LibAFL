@@ -1,4 +1,6 @@
-//! Compile-checked sketch of the structured mailbox input (design note #803/#865).
+//! Structured mailbox input + mutators (design note #803/#865). `catalog` loads the librarian JSON at runtime.
+pub mod catalog;
+pub mod mailbox;
 use std::{borrow::Cow, num::NonZeroUsize};
 
 use libafl::{
