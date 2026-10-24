@@ -11,7 +11,7 @@ use crate::cargo_add_rpath;
 
 pub const LIBAFL_QEMU_GIT_URL: &str = "https://github.com/PSPReverse/qemu-psp";
 pub const LIBAFL_QEMU_DIRNAME: &str = "qemu-libafl-bridge";
-pub const LIBAFL_QEMU_GIT_REV: &str = "ff161745616ce22ea8d3f1d29d25e34a8b079f7b";
+pub const LIBAFL_QEMU_GIT_REV: &str = "ce3f32d1326e5055d898852a943485fe4c613aa5";
 
 pub struct BuildResult {
     pub qemu_path: PathBuf,
