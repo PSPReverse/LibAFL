@@ -28,8 +28,8 @@ const WRAPPER_HEADER: &str = r#"
 
 #include "exec/target_page.h"
 #include "exec/cpu-defs.h"
-#include "hw/qdev-core.h"
-#include "hw/qdev-properties.h"
+#include "hw/core/qdev.h"
+#include "hw/core/qdev-properties.h"
 #include "qemu/error-report.h"
 
 #ifdef CONFIG_USER_ONLY
